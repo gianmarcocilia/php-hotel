@@ -40,7 +40,7 @@ $hotels = [
 
 ];
 
-var_dump($_GET);
+
 
 ?>
 
@@ -63,6 +63,16 @@ var_dump($_GET);
             <option value="true">Parcheggio SI</option>
             <option value="false">Parcheggio NO</option>
         </select>
+        <br>
+        <label for="vote">Seleziona una opzione</label>
+        <select name="vote" id="vote">
+            <option value="" disabled selected>Nessun filtro</option>
+            <option value="1">1 Stella</option>
+            <option value="2">2+ Stelle</option>
+            <option value="3">3+ Stelle</option>
+            <option value="4">4+ Stelle</option>
+            <option value="5">5+ Stelle</option>
+        </select>
         <button type="submit">Filtra</button>
     </form>
     <br>
@@ -79,11 +89,24 @@ var_dump($_GET);
                 <tr class="<?php if (isset($_GET['parking'])) {
                                 $parking = $_GET['parking'];
                                 if ($parking == 'false' && ($hotel['parking'] == true)) {
-                                    echo 'd-none';
+                                    echo 'd-none ';
                                 } elseif ($parking == 'true' && ($hotel['parking'] == false)) {
-                                    echo 'd-none';
+                                    echo 'd-none ';
                                 }
-                            } ?>">
+                            };
+                            if (isset($_GET['vote'])) {
+                                $vote = $_GET['vote'];
+                                if ($vote == '2' && ($hotel['vote'] < 2)) {
+                                    echo ' d-none';
+                                } elseif ($vote == '3' && ($hotel['vote'] < 3)) {
+                                    echo ' d-none';
+                                } elseif ($vote == '4' && ($hotel['vote'] < 4)) {
+                                    echo ' d-none';
+                                } elseif ($vote == '5' && ($hotel['vote'] < 5)) {
+                                    echo ' d-none';
+                                }
+                            };
+                             ?>">
                     <th scope="row"><?php echo $hotel['name'] ?></th>
                     <td><?php echo $hotel['description'] ?></td>
                     <td><?php echo $hotel['parking'] === true ? 'Si' : 'No' ?></td>
